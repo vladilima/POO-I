@@ -16,7 +16,12 @@ public class LoggerFile implements Logger {
         String text = "[" + timestamp + "]: " + level + " - " + message + "\n";
 
         try {
-            Files.write(Paths.get(filename), text.getBytes(), StandardOpenOption.APPEND);
+            if (Files.exists(Paths.get(filename))) {
+                Files.write(Paths.get(filename), text.getBytes(), StandardOpenOption.APPEND);
+            }
+            else {
+                Files.write(Paths.get(filename), text.getBytes());
+            }
         }
         catch (IOException e) {
             System.out.println("Erro ao salvar arquivo");
